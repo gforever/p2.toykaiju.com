@@ -15,11 +15,16 @@
 </head>
 
 <body>	
+	 
+<?php if(isset($content)) echo $content; ?> 
 
-	<nav>
-		<menu>
+<? php if(isset($client_files_body)) echo $client_files_body; ?> 
+<table class="navigation" width="200" border="0" align="center">
+  <tr>
+    <td><nav>
+		<menu> 
 			<?php if($user): ?>
-				<li><a href='/posts/add'>Add Post</a></li>
+				<li><a href='/posts/add'>Add Post</a></li> 
 				<li><a href='/posts/'>View Posts</a></li>
 				<li><a href='/posts/users'>Follow users</a></li>
 				<li><a href='/users/logout'>Logout</a></li>
@@ -28,10 +33,9 @@
 				<li><a href='/users/login'>Log in</a></li>
 			<?php endif; ?>
 		</menu>
-	</nav>
-	« 
-	<?php if(isset($content)) echo $content; ?>
+	</nav></td>
+  </tr>
+</table>
 
-	<?php if(isset($client_files_body)) echo $client_files_body; ?>
 </body>
 </html>

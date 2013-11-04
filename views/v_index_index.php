@@ -1,11 +1,14 @@
-<p>
-	Hello World! You have successfully spawned a new application.
-</p>
-
-<p>
-	This message is being triggered via the c_index.php controller, within the index() method.
-</p>
-
-<p>
-	<strong>Since everything is in working order, you should now delete <?php echo APP_PATH?>diagnostics.php</strong>
-</p>
+<?php if($user): ?>
+  <!-- This is used to print out the user array
+    <pre>
+     < ?php 
+	  print_r($user);
+	  ?>
+    </pre> -->
+    Hello <?=$user->first_name;?>
+<?php else: ?>
+   <h1> Welcome to Sqeaker</h1> <br /> 
+  <img src="/imgs/sqeaker.jpg" width="300" height="203" alt="SqeakerLogo" /> <br />
+  Please sign up or log in and have fun posting! <br />
+  +1 features include: Edit a Post and Delete a Post.
+<?php endif; ?>

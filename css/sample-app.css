@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* CSS Document 
+Andrew Wong
+CSCIE15
+10/31/13
+*/
+
+body {
+	background-color: #1C263C;
+	color:#FFFFFF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:16px;
+	text-align:center;
+}
+
+h1{
+	color: #9CFF00;
+}
+h2 {
+	color: #B6C0D2;
+}
+h3 {
+	color: #9CFF00;
+}
+
+a:link {
+	color:#09F;
+	text-decoration: none;
+}
+a:visited {
+	color:#09F;
+}
+a:hover {
+	color:#54FCFC;
+	text-decoration: none;
+}
+.error {
+	color: Red;
+	font-weight:bold;	
+}
+.navigation {
+	text-align:left;
+}
