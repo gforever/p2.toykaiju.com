@@ -28,12 +28,6 @@ class users_controller extends base_controller {
 		$email_unique = $this->userObj->confirm_unique_email($_POST["email"]);
 		
 		if($email_unique) {
-		  #need to check for duplicate email		
-	       echo"<pre>";
-	       #	print_r($_POST);
-     	   echo "You have successfully signed up";
-		   echo"<pre>";
-		
 		   DB::instance(DB_NAME)->insert_row('users', $_POST);
 		   #Send them to the login page
 		   Router::redirect('/users/login');
@@ -42,7 +36,11 @@ class users_controller extends base_controller {
 		   else {
             Router::redirect("/users/signup/error");
            }
-		
+           #need to check for duplicate email		
+	       echo"<pre>";
+	       #	print_r($_POST);
+     	   echo "You have successfully signed up";
+		   echo"<pre>";
 	}
 
     public function login($error = NULL) {
