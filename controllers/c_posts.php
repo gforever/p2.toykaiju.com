@@ -20,141 +20,56 @@ class posts_controller extends base_controller{
 		$_POST['modified'] = Time::now();
 		
 		DB::instance(DB_NAME)->insert('posts', $_POST);
-		
+	   
+	    #Then send user back to view posts
+        Router::redirect('/posts');
 	}
-	################################
+##############################################################
+     public function delete($post_id) {
+       #delete the post when post id match is found  
+       DB::instance(DB_NAME)->delete('posts','WHERE post_id ='.$post_id);
+       
+       #Then send user back to view posts
+       Router::redirect('/posts');
+    }  
+	
+	
+     public function edit($post_id) {
+        # Set up view
+                $this->template->content = View::instance("v_posts_edit");
+                
+                # Set up query to get all users
+                $q = 'SELECT * FROM posts WHERE post_id = '.$post_id;
+                        
+                # Run query
+                $post = DB::instance(DB_NAME)->select_row($q);
+                
+                
+                
+                # Pass data to the view
+                $this->template->content->post = $post;
+                
+                # Render view
+                echo $this->template;
 
-        ########### //Edit Posts ###########
-        public function edit($post = NULL){
+    }        
+    
+
+    public function p_edit($post_id) {
+                
+                $content = $_POST['content'];
+                                
+                # Update their row in the DB with the new token
+        $data = Array(
+                'content' => $content
+        );
         
-                //Determine if the user is logged in
-                if(!$this->user) {
-                        Router::redirect('/users/login/?no-permission');
+                  DB::instance(DB_NAME)->update('posts',$data, 'WHERE post_id ='.$post_id);                
+                Router::redirect('/posts');
                 
-                }
-                
-                //Specify the current logged in users ID. Required to compare if the user created the post.        
-                $user = $this->user->user_id;
-                
-                //Query to determine which user the post and if it belongs to the logged in user.
-                $q = "SELECT * FROM posts WHERE post_id = $post and user_id = $user";        
-                $posts = DB::instance(DB_NAME)->select_rows($q);
-                
-                        
-                if(!empty($posts)){
-                
-                                //Define view parameters
-                                $this->template->content = View::instance('v_posts_edit');
-                                $this->template->title = "Edit a New Post";
-                                
-                                //Send post array to the view
-                                $this->template->content->posts = $posts;
+        }        
 
-                                //Display the template
-                                echo $this->template;
-                                        
-                        }else{
-                
-                                //Redirect to view posts with an error
-                                Router::redirect('/posts/stream/?no-permission');
-                        
-                        }// End of Else
-                
-        }// End of Function
-
-
-        
-        ########### //Edit Posts ###########
-        public function p_edit($post = NULL){
-        
-                //Determine if the user is logged in
-                if(!$this->user) {
-                        Router::redirect('/users/login/?no-permission');
-                
-                }
-                
-                //Specify the current logged in users ID. Required to compare if the user created the post.        
-                $user = $this->user->user_id;
-                
-                //Query to determine which user the post and if it belongs to the logged in user.
-                $q = "SELECT * FROM posts where post_id = $post and user_id = $user";        
-                $posts = DB::instance(DB_NAME)->select_rows($q);
-                
-                                
-                if(!empty($posts)){
-                                
-                                
-                                //Added strip_tags() to remove and HTML or markup
-                                $title = $_POST['title'];
-                                $title = strip_tags(html_entity_decode(stripslashes(nl2br($title)),ENT_NOQUOTES,"Utf-8"));
-
-                                $content = $_POST['content'];
-                                $content = strip_tags(html_entity_decode(stripslashes(nl2br($content)),ENT_NOQUOTES,"Utf-8"));
-                                
-                                
-                                //If any portion of the POST is empty, redirect.
-                                if($title == '' || $content == '') {
-                                        Router::redirect('/posts/view/posts/'.$post.'/?empty-post');
-                                }
-                                                
-                                // Specify created and modified time that will be posted to the DB.
-                                $modified = $_POST['modified'] = Time::now();
-
-                                //Data to update in the DB into an ARRAY
-                                $data = Array('title' => $title, 'content' => $content, 'modified' => $modified);
-                                
-                                // Process from _POST parameters and insert them into the DB.
-                                DB::instance(DB_NAME)->update("posts", $data, "WHERE id = $post");
-                                
-                                //Set success message for the view
-                                Router::redirect('/posts/view/posts/'.$post.'/?post-updated');
-                
-                        }else{
-                        
-                                //Redirect to view posts with an error
-                                Router::redirect('/posts/stream/?no-permission');
-                        
-                }// End of else
-                
-                
-        }//End of function
-        
-        
-
-        ########### //Delete Post ###########
-        public function delete($post = NULL){
-        
-                //Determine if the user is logged in
-                if(!$this->user) {
-                        Router::redirect('/users/login/?no-permission');
-                }
-                        
-                //Specify the current logged in users ID. Required to compare if the user created the post.        
-                $user = $this->user->user_id;
-                
-                //Query to determine which user the post and if it belongs to the logged in user.
-                $q = "select * from posts where id = $post and created_by = $user";        
-                $posts = DB::instance(DB_NAME)->select_rows($q);
-                                                                        
-                //Determin if the post belongs to the user who created it
-                if(!empty($posts)){
-                                                                        
-                                //Delete the post.
-                                DB::instance(DB_NAME)->delete('posts', "WHERE id = '$post'");
-                                
-                                //Redirect to view posts with a success message.
-                                Router::redirect('/posts/user/'.$this->user->user_id.'/?delete-success');
-                                                
-                        //The query will be empty if the user did not create the post.                
-                        }else{
-                        
-                                //Redirect to view posts stream with an error
-                                Router::redirect('/posts/stream/?no-permission');
-                        
-                                }//end of else                        
-                
-                }//End of function
-####################################################################
+##############################################################
 		
 	public function index() {
         $this->template->content = View::instance('v_posts_index');

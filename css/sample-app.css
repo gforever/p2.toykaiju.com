@@ -52,3 +52,10 @@ a:hover {
 .navigation {
 	text-align:left;
 }
+.uName {
+	font-weight:bold;
+}
+.postDate{
+	font-size:10px;
+    padding-left: 20px;
+}

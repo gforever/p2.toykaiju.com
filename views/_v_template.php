@@ -16,9 +16,6 @@
 
 <body>	
 	 
-<?php if(isset($content)) echo $content; ?> 
-
-<? php if(isset($client_files_body)) echo $client_files_body; ?> 
 <table class="navigation" border="0" align="center">
   <tr>
     <td><nav>
@@ -40,6 +37,9 @@
 	</nav></td>
   </tr>
 </table>
+<?php if(isset($content)) echo $content; ?> 
+<?php if(isset($client_files_body)) echo $client_files_body; ?> 
+
 <p>Squeaker is an application project for CSCI E-15 at Harvard University Extension School. <br/>
 Created by: Andrew Wong</p>
 </body>
