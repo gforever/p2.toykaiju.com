@@ -74,6 +74,7 @@ class posts_controller extends base_controller{
 	public function index() {
         $this->template->content = View::instance('v_posts_index');
 		$q= 'SELECT 
+               posts.post_id,
                posts.content,
                posts.created,
                posts.user_id AS post_user_id,
