@@ -24,7 +24,7 @@ class posts_controller extends base_controller{
 	    #Then send user back to view posts
         Router::redirect('/posts');
 	}
-#########+1 Feature Delete Post ########################################
+##############################################################
      public function delete($post_id) {
        #delete the post when post id match is found  
        DB::instance(DB_NAME)->delete('posts','WHERE post_id ='.$post_id);
@@ -33,7 +33,7 @@ class posts_controller extends base_controller{
        Router::redirect('/posts');
     }  
 	
-#########+1 Feature Edit Post ########################################	
+	
      public function edit($post_id) {
         # Set up view
                 $this->template->content = View::instance("v_posts_edit");
@@ -43,7 +43,9 @@ class posts_controller extends base_controller{
                         
                 # Run query
                 $post = DB::instance(DB_NAME)->select_row($q);
-                               
+                
+                
+                
                 # Pass data to the view
                 $this->template->content->post = $post;
                 
@@ -57,12 +59,14 @@ class posts_controller extends base_controller{
                 
                 $content = $_POST['content'];
                                 
-                # Update the row in the DB with new token
+                # Update their row in the DB with the new token
         $data = Array(
                 'content' => $content
         );
+        
                 DB::instance(DB_NAME)->update('posts',$data, 'WHERE post_id ='.$post_id);                
-                Router::redirect('/posts');               
+                Router::redirect('/posts');
+                
         }        
 
 ##############################################################
