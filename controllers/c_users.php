@@ -89,9 +89,8 @@ class users_controller extends base_controller {
     public function logout() {
 		$new_token = sha1(TOKEN_SALT.$this->user->email.Utils::generate_random_string());
 		$data = Array('token' => $new_token);
-    DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
-	setcookie('token','',strtotime('-1 year'), '/');
-	
+        DB::instance(DB_NAME)->update('users',$data, 'WHERE user_id ='. $this->user->user_id);
+	    setcookie('token','',strtotime('-1 year'), '/');
         echo "You have logged out successfully.";
 	#Router::redirect('/');
 	    echo "<br>";

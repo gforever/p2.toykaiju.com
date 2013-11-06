@@ -49,13 +49,23 @@ a:hover {
 	color: Red;
 	font-weight:bold;	
 }
+.footnote{
+	font-size:xx-small;
+}
+.minilogo{
+    text-align:center;
+}
 .navigation {
 	text-align:left;
-}
-.uName {
-	font-weight:bold;
+	padding-right: 30px;
 }
 .postDate{
 	font-size:10px;
     padding-left: 20px;
+	text-align: right;
+}
+
+.uName {
+	font-weight:bold;
+	text-align: left;
 }
