@@ -23,8 +23,6 @@
 			<?php if($user): ?>
              <ul>
 				<li><a href='/posts/add'>Add Post</a></li> 
-                <li><a href='/posts/edit'>Edit Posts</a></li> 
-                <li><a href='/posts/delete_p'>Delete Posts</a></li> 
 				<li><a href='/posts/'>View Posts</a></li>
 				<li><a href='/posts/users'>Follow users</a></li>
 				<li><a href='/users/logout'>Logout</a></li>

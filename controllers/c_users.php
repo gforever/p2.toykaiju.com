@@ -25,15 +25,10 @@ class users_controller extends base_controller {
 		$_POST['created'] = Time::now();
 		$_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
     	$_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+		#checks for duplicate email. 
 		$email_unique = $this->userObj->confirm_unique_email($_POST["email"]);
 		
 		if($email_unique) {
-		  #need to check for duplicate email		
-	       echo"<pre>";
-	       #	print_r($_POST);
-     	   echo "You have successfully signed up";
-		   echo"<pre>";
-		
 		   DB::instance(DB_NAME)->insert_row('users', $_POST);
 		   #Send them to the login page
 		   Router::redirect('/users/login');
@@ -42,7 +37,11 @@ class users_controller extends base_controller {
 		   else {
             Router::redirect("/users/signup/error");
            }
-		
+	
+	       echo"<pre>";
+	       #	print_r($_POST);
+     	   echo "You have successfully signed up";
+		   echo"<pre>";
 	}
 
     public function login($error = NULL) {
@@ -73,10 +72,9 @@ class users_controller extends base_controller {
 		#Successful 
 		if($token){
 			setcookie('token',$token,strtotime('+1 year'), '/');
-		     echo "Success. You are logged in!";
-			 
 			 #Send user to the homepage
 		     Router::redirect('/'); 
+		     echo "Success. You are logged in!";		 
 		}
 		#Fail
 		else{
