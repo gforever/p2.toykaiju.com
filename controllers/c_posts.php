@@ -10,7 +10,8 @@ class posts_controller extends base_controller{
 	#}
 	public function add() {
 		#Sets up the view
-		$this->template = View::instance("v_posts_add");
+		$this->template->content = View::instance("v_posts_add");
+		
 		echo $this->template;
 	}
 
